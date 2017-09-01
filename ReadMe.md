@@ -3,6 +3,13 @@ http://github.com/JChristensen/extEEPROM
 ReadMe file  
 Jack Christensen Jul 2014
 
+
+xiaolaba, testing, EEPROM 24A02, SEP 2017.
+download http://arduiniana.org/Streaming/Streaming5.zip
+unzip and copy Streaming.h to folder **ketchbook\libraries\extEEPROM**, it is a must.
+
+
+
 ![CC BY-SA](http://mirrors.creativecommons.org/presskit/buttons/80x15/png/by-sa.png)
 
 ## Introduction ##
