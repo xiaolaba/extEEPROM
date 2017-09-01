@@ -4,7 +4,7 @@ ReadMe file
 Jack Christensen Jul 2014
 
 
-xiaolaba, testing, EEPROM 24A02, SEP 2017.
+xiaolaba, testing, EEPROM 24A02, Arduino IDE 1.8.1, SEP 2017.
 download http://arduiniana.org/Streaming/Streaming5.zip
 unzip and copy Streaming.h to folder **ketchbook\libraries\extEEPROM**, it is a must.
 
