@@ -102,17 +102,17 @@ extEEPROM myEEPROM(kbits_256, 2, 64);			//two 24LC256 EEPROMS on the bus
 extEEPROM oddEEPROM(kbits_8, 1, 16, 0x42);		//an EEPROM with a non-standard I2C address
 ```
 
-## Methods ##
-###begin(twiClockFreq_t freq)
-#####Description
-Initializes the library. Call this method once in the setup code. begin() does a dummy I/O so that the user may interrogate the return status to ensure the EEPROM is operational.
-#####Syntax
-`myEEPROM.begin(twiClockFreq_t freq);`
-#####Parameters
-**freq** *(twiClockFreq_t)*: The desired I2C bus speed, `extEEPROM::twiClock100kHz` or `extEEPROM::twiClock400kHz`. Can be omitted in which case it will default to `twiClock100kHz`. **NOTE:** When using 400kHz, if there are other devices on the bus they must all support a 400kHz bus speed. **Secondly**, the other devices should be initialized first, as other libraries may not support adjusting the bus speed. To ensure the desired speed is set, call the extEEPROM.begin() function *after* initializing all other I2C devices.
-#####Returns
-I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes.
-#####Example
+## Methods ##  
+###begin(twiClockFreq_t freq)  
+#####Description  
+Initializes the library. Call this method once in the setup code. begin() does a dummy I/O so that the user may interrogate the return status to ensure the EEPROM is operational.  
+#####Syntax  
+`myEEPROM.begin(twiClockFreq_t freq);`  
+#####Parameters  
+**freq** *(twiClockFreq_t)*: The desired I2C bus speed, `extEEPROM::twiClock100kHz` or `extEEPROM::twiClock400kHz`. Can be omitted in which case it will default to `twiClock100kHz`. **NOTE:** When using 400kHz, if there are other devices on the bus they must all support a 400kHz bus speed. **Secondly**, the other devices should be initialized first, as other libraries may not support adjusting the bus speed. To ensure the desired speed is set, call the extEEPROM.begin() function *after* initializing all other I2C devices.  
+#####Returns  
+I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes.  
+#####Example  
 ```c++
 extEEPROM myEEPROM(kbits_256, 2, 64);
 byte i2cStat = myEEPROM.begin(extEEPROM::twiClock400kHz);
@@ -120,18 +120,18 @@ if ( i2cStat != 0 ) {
 	//there was a problem
 }
 ```
-###write(unsigned long addr, byte *values, unsigned int nBytes)
-#####Description
-Write one or more bytes to external EEPROM.
-#####Syntax
-`myEEPROM.write(unsigned long addr, byte* values, byte nBytes);`
-#####Parameters
-**addr** *(unsigned long)*: The beginning EEPROM location to write.  
+###write(unsigned long addr, byte *values, unsigned int nBytes)  
+#####Description  
+Write one or more bytes to external EEPROM.  
+#####Syntax  
+`myEEPROM.write(unsigned long addr, byte* values, byte nBytes);`  
+#####Parameters  
+**addr** *(unsigned long)*: The beginning EEPROM location to write.    
 **values** _(byte*)_: Pointer to an array containing the data to write.  
 **nBytes** *(unsigned int)*: The number of bytes to write.  
-#####Returns
-I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes. Returns a status of EEPROM_ADDR_ERR if the I/O would extend past the top of the EEPROM address space.
-#####Example
+#####Returns  
+I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes. Returns a status of EEPROM_ADDR_ERR if the I/O would extend past the top of the EEPROM address space.  
+#####Example  
 ```c++
 byte myData[10];
 //write 10 bytes starting at location 42
@@ -146,33 +146,33 @@ if ( i2cStat != 0 ) {
 	}
 }
 ```
-###write(unsigned long addr, byte value)
-#####Description
-Writes a single byte to external EEPROM.
-#####Syntax
-`myEEPROM.write(unsigned long addr, byte value);`
-#####Parameters
+###write(unsigned long addr, byte value)  
+#####Description  
+Writes a single byte to external EEPROM.  
+#####Syntax  
+`myEEPROM.write(unsigned long addr, byte value);`  
+#####Parameters  
 **addr** *(unsigned long)*: The EEPROM location to write.  
-**values** _(byte)_: The value to write.  
-#####Returns
-Same as multiple-byte write() above.
-#####Example
+**values** _(byte)_: The value to write.   
+#####Returns  
+Same as multiple-byte write() above.  
+#####Example  
 ```c++
 //write the value 16 to EEPROM location 314.
 byte i2cStat = myEEPROM.write(314, 16);
 ```
-###read(unsigned long addr, byte *values, unsigned int nBytes)
-#####Description
-Reads one or more bytes from external EEPROM into an array supplied by the caller.
-#####Syntax
-`myEEPROM.read(unsigned long addr, byte *values, byte nBytes);`
-#####Parameters
+###read(unsigned long addr, byte *values, unsigned int nBytes)  
+#####Description  
+Reads one or more bytes from external EEPROM into an array supplied by the caller.  
+#####Syntax  
+`myEEPROM.read(unsigned long addr, byte *values, byte nBytes);`  
+#####Parameters  
 **addr** *(unsigned long)*: The beginning EEPROM location to read from.  
 **values** _(byte*)_: Pointer to an array to receive the data.  
 **nBytes** *(unsigned int)*: The number of bytes to read.  
-#####Returns
-I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes. Returns a status of EEPROM_ADDR_ERR if the I/O would extend past the top of the EEPROM address space.
-#####Example
+#####Returns  
+I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes. Returns a status of EEPROM_ADDR_ERR if the I/O would extend past the top of the EEPROM address space.  
+#####Example  
 ```c++
 byte myData[10];
 //read 10 bytes starting at location 42
@@ -187,17 +187,17 @@ if ( i2cStat != 0 ) {
 	}
 }
 ```
-###read(unsigned long addr)
-#####Description
-Reads a single byte from external EEPROM.
-#####Syntax
-`myEEPROM.read(unsigned long addr);`
-#####Parameters
-**addr** *(unsigned long)*: The EEPROM location to read from.
-#####Returns
-The data read from EEPROM or an error code *(int)*. To distinguish error values from valid data, error values are returned as negative numbers. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of return codes. Returns a status of EEPROM_ADDR_ERR if the I/O would extend past the top of the EEPROM address space.
+###read(unsigned long addr)  
+#####Description  
+Reads a single byte from external EEPROM.  
+#####Syntax  
+`myEEPROM.read(unsigned long addr);`  
+#####Parameters  
+**addr** *(unsigned long)*: The EEPROM location to read from.  
+#####Returns  
+The data read from EEPROM or an error code *(int)*. To distinguish error values from valid data, error values are returned as negative numbers. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of return codes. Returns a status of EEPROM_ADDR_ERR if the I/O would extend past the top of the EEPROM address space.  
 
-#####Example
+#####Example  
 ```c++
 int myData;
 //read a byte from location 42
