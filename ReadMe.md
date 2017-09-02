@@ -1,13 +1,14 @@
 # Arduino External EEPROM Library v3 #
 http://github.com/JChristensen/extEEPROM
 ReadMe file  
-Jack Christensen Jul 2014
+Jack Christensen Jul 2014  
 
 
 ## xiaolaba, testing, EEPROM 24A02 ##  
 2017-SEP-02, Arduino IDE 1.8.1  
-download http://arduiniana.org/Streaming/Streaming5.zip, unzip and copy Streaming.h to folder **ketchbook\libraries\extEEPROM**, it is a must.  
+download http://arduiniana.org/Streaming/Streaming5.zip, unzip and copy Streaming.h to folder **sketchbook\libraries\extEEPROM**, it is a must.  
 (side issue, github web editor, no new line was allowed !? add two spaces to each end of line, then press ENTER, will do the job and displyed as a new line desired, see https://stackoverflow.com/questions/24575680/new-lines-inside-paragraph-in-readme-md)  
+
 .  
 .  
 
