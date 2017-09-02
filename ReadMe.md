@@ -103,13 +103,15 @@ extEEPROM oddEEPROM(kbits_8, 1, 16, 0x42);		//an EEPROM with a non-standard I2C 
 ```
 
 ## Methods ##  
-### begin(twiClockFreq_t freq)  
-##### Description  
+### begin(twiClockFreq_t freq) ###  
+##### Description #####  
 Initializes the library. Call this method once in the setup code. begin() does a dummy I/O so that the user may interrogate the return status to ensure the EEPROM is operational.  
 ##### Syntax  
 `myEEPROM.begin(twiClockFreq_t freq);`  
 ##### Parameters  
-**freq** *(twiClockFreq_t)*: The desired I2C bus speed, `extEEPROM::twiClock100kHz` or `extEEPROM::twiClock400kHz`. Can be omitted in which case it will default to `twiClock100kHz`. **NOTE:** When using 400kHz, if there are other devices on the bus they must all support a 400kHz bus speed. **Secondly**, the other devices should be initialized first, as other libraries may not support adjusting the bus speed. To ensure the desired speed is set, call the extEEPROM.begin() function *after* initializing all other I2C devices.  
+**freq** *(twiClockFreq_t)*: The desired I2C bus speed, `extEEPROM::twiClock100kHz` or `extEEPROM::twiClock400kHz`. Can be omitted in which case it will default to `twiClock100kHz`.  
+**NOTE:** When using 400kHz, if there are other devices on the bus they must all support a 400kHz bus speed.  
+**Secondly**, the other devices should be initialized first, as other libraries may not support adjusting the bus speed. To ensure the desired speed is set, call the extEEPROM.begin() function *after* initializing all other I2C devices.  
 ##### Returns  
 I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes.  
 ##### Example  
