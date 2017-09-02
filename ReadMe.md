@@ -91,7 +91,7 @@ I2C bus speed.
 ##### Description
 Instantiates an external EEPROM object.
 ##### Syntax
-`extEEPROM myEEPROM(eeprom_size_t devCap, byte nDev, unsigned int pgSize, byte busAddr));`
+`extEEPROM eep(eeprom_size_t devCap, byte nDev, unsigned int pgSize, byte busAddr));`
 ##### Parameters
 **devCap** *(eeprom_size_t)*: The size of one EEPROM device in k-bits. Choose a value from the eeprom_size_t enumeration above.  
 **nDev** *(byte)*: The number of EEPROM devices on the bus. Note that if there are multiple EEPROM devices on the bus, they must be identical and each must have its address pins strapped properly.  
@@ -99,7 +99,7 @@ Instantiates an external EEPROM object.
 **busAddr** *(byte)*: The base I2C bus address for the EEPROM(s). 0x50 is a common value and this parameter can be omitted, in which case 0x50 will be used as the default.  
 ##### Example
 ```c++
-extEEPROM myEEPROM(kbits_256, 2, 64);			//two 24LC256 EEPROMS on the bus
+extEEPROM eep(kbits_256, 2, 64);			//two 24LC256 EEPROMS on the bus
 extEEPROM oddEEPROM(kbits_8, 1, 16, 0x42);		//an EEPROM with a non-standard I2C address
 ```
 
@@ -108,7 +108,7 @@ extEEPROM oddEEPROM(kbits_8, 1, 16, 0x42);		//an EEPROM with a non-standard I2C 
 ##### Description #####  
 Initializes the library. Call this method once in the setup code. begin() does a dummy I/O so that the user may interrogate the return status to ensure the EEPROM is operational.  
 ##### Syntax  
-`myEEPROM.begin(twiClockFreq_t freq);`  
+`eep.begin(twiClockFreq_t freq);`  
 ##### Parameters  
 **freq** *(twiClockFreq_t)*: The desired I2C bus speed, `extEEPROM::twiClock100kHz` or `extEEPROM::twiClock400kHz`. Can be omitted in which case it will default to `twiClock100kHz`.  
 **NOTE:** When using 400kHz, if there are other devices on the bus they must all support a 400kHz bus speed.  
@@ -117,8 +117,8 @@ Initializes the library. Call this method once in the setup code. begin() does a
 I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmission() function](http://arduino.cc/en/Reference/WireEndTransmission) for a description of other return codes.  
 ##### Example  
 ```c++
-extEEPROM myEEPROM(kbits_256, 2, 64);
-byte i2cStat = myEEPROM.begin(extEEPROM::twiClock400kHz);
+extEEPROM eep(kbits_256, 2, 64);
+byte i2cStat = eep.begin(extEEPROM::twiClock400kHz);
 if ( i2cStat != 0 ) {
 	//there was a problem
 }
@@ -127,7 +127,7 @@ if ( i2cStat != 0 ) {
 ##### Description  
 Write one or more bytes to external EEPROM.  
 ##### Syntax  
-`myEEPROM.write(unsigned long addr, byte* values, byte nBytes);`  
+`eep.write(unsigned long addr, byte* values, byte nBytes);`  
 ##### Parameters  
 **addr** *(unsigned long)*: The beginning EEPROM location to write.    
 **values** _(byte*)_: Pointer to an array containing the data to write.  
@@ -138,7 +138,7 @@ I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmissi
 ```c++
 byte myData[10];
 //write 10 bytes starting at location 42
-byte i2cStat = myEEPROM.write(42, &data, 10);
+byte i2cStat = eep.write(42, &data, 10);
 if ( i2cStat != 0 ) {
 	//there was a problem
 	if ( i2cStat == EEPROM_ADDR_ERR) {
@@ -153,7 +153,7 @@ if ( i2cStat != 0 ) {
 ##### Description  
 Writes a single byte to external EEPROM.  
 ##### Syntax  
-`myEEPROM.write(unsigned long addr, byte value);`  
+`eep.write(unsigned long addr, byte value);`  
 ##### Parameters  
 **addr** *(unsigned long)*: The EEPROM location to write.  
 **values** _(byte)_: The value to write.   
@@ -162,13 +162,13 @@ Same as multiple-byte write() above.
 ##### Example  
 ```c++
 //write the value 16 to EEPROM location 314.
-byte i2cStat = myEEPROM.write(314, 16);
+byte i2cStat = eep.write(314, 16);
 ```
 ### read(unsigned long addr, byte *values, unsigned int nBytes)  
 ##### Description  
 Reads one or more bytes from external EEPROM into an array supplied by the caller.  
 ##### Syntax  
-`myEEPROM.read(unsigned long addr, byte *values, byte nBytes);`  
+`eep.read(unsigned long addr, byte *values, byte nBytes);`  
 ##### Parameters  
 **addr** *(unsigned long)*: The beginning EEPROM location to read from.  
 **values** _(byte*)_: Pointer to an array to receive the data.  
@@ -179,7 +179,7 @@ I2C I/O status, zero if successful *(byte)*. See the [Arduino Wire.endTransmissi
 ```c++
 byte myData[10];
 //read 10 bytes starting at location 42
-byte i2cStat = myEEPROM.read(42, &data, 10);
+byte i2cStat = eep.read(42, &data, 10);
 if ( i2cStat != 0 ) {
 	//there was a problem
 	if ( i2cStat == EEPROM_ADDR_ERR) {
@@ -194,7 +194,7 @@ if ( i2cStat != 0 ) {
 ##### Description  
 Reads a single byte from external EEPROM.  
 ##### Syntax  
-`myEEPROM.read(unsigned long addr);`  
+`eep.read(unsigned long addr);`  
 ##### Parameters  
 **addr** *(unsigned long)*: The EEPROM location to read from.  
 ##### Returns  
@@ -204,7 +204,7 @@ The data read from EEPROM or an error code *(int)*. To distinguish error values 
 ```c++
 int myData;
 //read a byte from location 42
-int readValue = myEEPROM.read(42);
+int readValue = eep.read(42);
 if ( readValue < 0 ) {
 	//there was a problem
 	if ( -readValue == EEPROM_ADDR_ERR) {
